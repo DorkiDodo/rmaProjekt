@@ -10,6 +10,12 @@ app.use(cors())
 app.use(express.json())
 
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }))
+
+app.use((req, res, next) => {
+  console.log(req.method, req.url)
+  next()
+})
 
 const connection = mysql.createConnection({
   host: 'ucka.veleri.hr',
@@ -18,8 +24,6 @@ const connection = mysql.createConnection({
   port: 3306,
   database: 'dsepic',
 })
-
-app.use(express.urlencoded({ extended: true }))
 
 connection.connect(function (err) {
   if (err) {
@@ -37,7 +41,7 @@ app.get('/api/users', (req, res) => {
 })
 
 //troskovi po odabranom useru
-app.get('/api/troskovi', (req, res) => {
+app.get('/api/Troskovi', (req, res) => {
   const userId = req.query.userId
   if (!userId) return res.status(400).send('userId is required')
 
@@ -51,7 +55,7 @@ app.get('/api/troskovi', (req, res) => {
   )
 })
 
-app.post('/api/unostTroskova', (req, res) => {
+app.post('/api/UnosTroskova', (req, res) => {
   const { userId, category, amount, date } = req.body
   if (!userId || !category || !amount || !date) return res.status(400).send('Missing fields')
 

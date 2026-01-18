@@ -1,29 +1,48 @@
-<template>
-  <q-card>
-    <q-card-section>
-      <div v-if="store.expenses.value.length">
-        <apexchart type="line" height="300" :options="options" :series="series" />
-      </div>
-      <div v-else class="text-center q-pa-md">Nema troškova za prikaz</div>
-    </q-card-section>
-  </q-card>
-</template>
-
 <script setup>
-import { computed } from 'vue'
-import { useExpenses } from 'src/stores/expenses'
+import { ref, watch, computed } from 'vue'
+import { useExpensesStore } from 'src/stores/expenses'
 
-const store = useExpenses()
+const props = defineProps({
+  userId: {
+    type: Number,
+    required: true,
+  },
+})
+
+const store = useExpensesStore()
+const expenses = ref([])
+
+async function load() {
+  expenses.value = await store.loadExpensesForUser(props.userId)
+}
+
+watch(() => props.userId, load, { immediate: true })
 
 const series = computed(() => [
   {
     name: 'Troškovi',
-    data: store.expenses.value.map((e) => Number(e.amount) || 0),
+    data: expenses.value.map((e) => Number(e.amount)),
   },
 ])
 
 const options = computed(() => ({
-  chart: { id: 'expenses' },
-  xaxis: { categories: store.expenses.value.map((e) => e.date || '') },
+  xaxis: {
+    categories: expenses.value.map((e) => e.date),
+  },
 }))
 </script>
+
+<template>
+  <q-card>
+    <q-card-section>
+      <apexchart
+        v-if="expenses.length"
+        type="line"
+        height="300"
+        :series="series"
+        :options="options"
+      />
+      <div v-else class="text-center q-pa-md">Nema troškova</div>
+    </q-card-section>
+  </q-card>
+</template>

@@ -79,3 +79,11 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
 </script>
+
+<style scoped>
+@media (max-width: 600px) {
+  .text-h6 {
+    font-size: 1.1rem;
+  }
+}
+</style>
