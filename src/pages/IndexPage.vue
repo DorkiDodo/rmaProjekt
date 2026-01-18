@@ -90,7 +90,9 @@ const saveExpense = async () => {
         />
 
         <q-btn class="col" label="Konverzija" color="secondary" @click="$router.push('/convert')" />
-        <q-btn class="col" label="Investicije" color="secondary" @click="$router.push('/invest')" />
+        <q-btn class="col" label="Crypto konverzija" color="secondary" @click="$router.push('/add')" />
+        <q-btn class="col" label="Štednja" color="secondary" @click="$router.push('/invest')" />
+
       </q-card-section>
     </q-card>
   </q-page>

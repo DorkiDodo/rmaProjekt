@@ -69,6 +69,46 @@ app.post('/api/UnosTroskova', (req, res) => {
   )
 })
 
+
+
+
+
+app.get('/api/Stednja', (req, res) => {
+  const userId = req.query.userId
+  if (!userId) return res.status(400).send('userId is required')
+
+  connection.query(
+    'SELECT * FROM savings2 WHERE user_id = ? ORDER BY date DESC',
+    [userId],
+    (err, results) => {
+      if (err) return res.status(500).send(err)
+      res.json(results)
+    }
+  )
+})
+
+
+app.post('/api/UnosStednje', (req, res) => {
+  const { userId, category, amount, date } = req.body
+
+  if (!userId || !category || !amount || !date) return res.status(400).send('Missing fields')
+
+  connection.query(
+    'INSERT INTO savings2 (user_id, category, amount, date) VALUES (?, ?, ?, ?)',
+    [userId, category, amount, date],
+    (err, result) => {
+      if (err) return res.status(500).send(err)
+      res.json({ id: result.insertId })
+    }
+  )
+})
+
+
+
+
+
+
+
 app.listen(port, () => {
   console.log('Server running at port: ' + port)
 })
