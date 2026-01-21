@@ -29,17 +29,23 @@ import { ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
-  {
-    title: 'Troškovi',
-    icon: 'euro',
-    link: '/#/troskovi',
-  },
+
   {
     title: 'Početna',
     icon: 'home',
     link: '/#',
   },
- 
+   {
+    title: 'Troškovi',
+    icon: 'euro',
+    link: '/#/troskovi',
+  },
+   {
+    title: 'Konverzija',
+    icon: 'euro',
+    link: '/#/convert',
+  },
+
 ]
 
 const leftDrawerOpen = ref(false)

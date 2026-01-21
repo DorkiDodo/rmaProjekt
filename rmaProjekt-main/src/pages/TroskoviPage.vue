@@ -2,20 +2,21 @@
   <q-page padding>
     <div class="q-pa-md">
 
-      <q-btn class="q-mx-md" label="Prikaži troškove"  color="blue" @click="prikaziTablicu = !prikaziTablicu"/>
-      <q-btn class="q-mx-md" label="Dodaj novi trošak" color="red" @click="prikaziFormu = !prikaziFormu"/>
-        <q-form v-if="prikaziFormu">
-            <q-form class="q-gutter-md">
-            <q-input color="blue" v-model="nazivTroska" label="Naziv troška" />
-            <q-input color="grey-3" v-model="vrijednost" label="Vrijednost" type="number"/>
-            <q-input color="grey-3" v-model="datum" label="Datum" type="date" />
-            <q-input color="grey-3" v-model="opis" label="Opis troška"/>
+      <q-btn class="q-mx-md" label="Prikaži troškove" icon="list" color="blue" @click="prikaziTablicu = !prikaziTablicu"/>
+      <q-btn  label="Dodaj novi trošak" icon="add" color="red" @click="prikaziFormu = !prikaziFormu"/>
+
+
+       <q-form v-if="prikaziFormu" class="q-gutter-md" @submit.prevent="unosTroska">
+            <q-input v-model="nazivTroska" label="Naziv troška" />
+            <q-input v-model="vrijednost" label="Vrijednost" type="number"/>
+            <q-input v-model="datum" label="Datum" type="date" />
+            <q-input v-model="opis" label="Opis troška"/>
                 <div>
                 <q-btn label="Submit" type="submit" color="primary" @click="unosTroska()" />
-                <q-btn label="Reset" @click="resetInput" color="primary" flat class="q-ml-sm" />
+                <q-btn label="Reset" @click="resetInput" color="red" class="q-mx-md" />
                 </div>
         </q-form>
-      </q-form>
+
       <q-table v-if="prikaziTablicu" flat bordered :rows="troskovi" :columns="columns" row-key="id" :wrap-cells="true" />
     </div>
   </q-page>
@@ -71,7 +72,7 @@ async function unosTroska () {
     })
 
     console.log(result)
-  } 
+  }
   catch (error) {
     Notify.create({
       type: 'negative',
