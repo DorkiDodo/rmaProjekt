@@ -1,9 +1,9 @@
 <template>
   <q-page padding>
-    <div class="q-pa-md">
+    <div>
 
-      <q-btn class="q-mx-md" label="Prikaži troškove" icon="list" color="blue" @click="prikaziTablicu = !prikaziTablicu"/>
-      <q-btn  label="Dodaj novi trošak" icon="add" color="red" @click="prikaziFormu = !prikaziFormu"/>
+      <q-btn class="q-ma-md" label="Prikaži troškove" icon="list" color="blue" @click="prikaziTablicu = !prikaziTablicu"/>
+      <q-btn  label="Dodaj novi trošak" icon="add" color="orange" @click="prikaziFormu = !prikaziFormu"/>
 
 
        <q-form v-if="prikaziFormu" class="q-gutter-md" @submit.prevent="unosTroska">
